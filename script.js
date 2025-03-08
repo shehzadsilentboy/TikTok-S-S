@@ -1,33 +1,37 @@
 async function fetchVideos() {
-    let username = document.getElementById("username").value;
-    if (!username) {
-        alert("Please enter a TikTok username!");
-        return;
-    }
+    const keywords = document.getElementById('keywords').value;
+    const url = `https://tiktok-scraper7.p.rapidapi.com/feed/search?keywords=${keywords}&region=us&count=10&cursor=0&publish_time=0&sort_type=0`;
 
-    let videoContainer = document.getElementById("videos");
-    videoContainer.innerHTML = "<p>Loading...</p>";
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': 'd73e73daccmshd5538e2469e414fp13847ejsn2be6e197649e',
+            'x-rapidapi-host': 'tiktok-scraper7.p.rapidapi.com'
+        }
+    };
 
     try {
-        let response = await fetch(`https://www.tiktok.com/@${username}`);
-        let text = await response.text();
-
-        // Extract video URLs using regex (not official API)
-        let matches = [...text.matchAll(/"playAddr":"(.*?)"/g)];
-        videoContainer.innerHTML = ""; // Clear previous content
-
-        if (matches.length === 0) {
-            videoContainer.innerHTML = "<p>No videos found or profile is private.</p>";
-            return;
-        }
-
-        // Display latest videos
-        matches.slice(0, 5).forEach(match => {
-            let videoUrl = match[1].replace(/\\u0026/g, "&"); // Fix URL encoding
-            let videoElement = `<video controls src="${videoUrl}" width="300"></video>`;
-            videoContainer.innerHTML += videoElement;
-        });
+        const response = await fetch(url, options);
+        const data = await response.json();
+        displayVideos(data);
     } catch (error) {
-        videoContainer.innerHTML = "<p>Error fetching videos. Try again later.</p>";
+        console.error('Error fetching videos:', error);
     }
+}
+
+function displayVideos(data) {
+    const videosContainer = document.getElementById('videos');
+    videosContainer.innerHTML = '';
+
+    data.data.forEach(video => {
+        const videoElement = document.createElement('div');
+        videoElement.classList.add('video');
+        videoElement.innerHTML = `
+            <a href="${video.video_url}" target="_blank">
+                <img src="${video.cover}" alt="Video cover" width="200">
+            </a>
+            <p>Likes: ${video.digg_count}</p>
+        `;
+        videosContainer.appendChild(videoElement);
+    });
 }
