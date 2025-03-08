@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok Video Fetcher</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>TikTok Video Fetcher</h1>
-        <input type="text" id="keywords" placeholder="Enter keywords">
-        <button id="fetchBtn">Fetch Videos</button>
-        <div id="videos"></div>
-    </div>
-    <script src="scripts.js"></script>
+    <h1>TikTok Username Se Videos Dekhein</h1>
+    <input type="text" id="username" placeholder="TikTok Username daalein">
+    <button onclick="fetchVideos()">Search</button>
+    <div id="videos"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>
