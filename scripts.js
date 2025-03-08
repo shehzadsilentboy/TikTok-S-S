@@ -12,7 +12,7 @@ async function fetchVideos() {
     const options = {
         method: 'GET',
         headers: {
-            'x-rapidapi-key': 'YOUR_RAPIDAPI_KEY_HERE',
+            'x-rapidapi-key': 'd73e73daccmshd5538e2469e414fp13847ejsn2be6e197649e',
             'x-rapidapi-host': 'tiktok-scraper7.p.rapidapi.com'
         }
     };
